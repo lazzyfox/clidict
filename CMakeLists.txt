@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9)
 project(clidict VERSION 0.0.1 DESCRIPTION "commands storage container for CLI")
 
-option(BuildTests          "Build the unit tests when BUILD_TESTING is enabled." ${MAIN_PROJECT})
+option(BuildTests "Build the unit tests when BUILD_TESTING is enabled." ${MAIN_PROJECT})
 
 set(DEFAULT_BUILD_TYPE "Release")
 set (CMAKE_CXX_COMPILER_VERSION 11)
@@ -52,7 +52,7 @@ install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/ DESTINATION include)
 
 
-if (BuildTests )
+if (BuildTests)
   include(CTest)
   enable_testing()
   find_package(GTest CONFIG REQUIRED)
@@ -63,3 +63,25 @@ if (BuildTests )
   set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
   include(CPack)
 endif ()
+
+find_package(Doxygen)
+ 
+if (DOXYGEN_FOUND)
+    # set input and output files
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/doc)
+
+    # request to configure the file
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    message("Doxygen build started")
+
+    # note the option ALL which allows to build the docs together with the application
+    add_custom_target( doc_doxygen ALL
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM )
+else (DOXYGEN_FOUND)
+    message("Doxygen need to be installed to generate the doxygen documentation")
+endif (DOXYGEN_FOUND)
+
