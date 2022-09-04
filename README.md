@@ -1,6 +1,7 @@
             Easy, single c++ file library to store and substitute command line commands
 
 [![Build](https://github.com/lazzyfox/clidict/actions/workflows/cmake_build.yml/badge.svg)](https://github.com/lazzyfox/clidict/actions/workflows/cmake_build.yml)
+[![Unit_Tests](https://github.com/lazzyfox/clidict/actions/workflows/cmake_test.yml/badge.svg)](https://github.com/lazzyfox/clidict/actions/workflows/cmake_test.yml)
 
   Container structure
 Booth kind of containers a Radix tree based on linked leasts. 
